@@ -30,7 +30,7 @@ Vue.use(Vuetify, {
     transitions,
   },
   theme: {
-    primary: '#ee44aa',
+    primary: '#4dd0e1',
     secondary: '#424242',
     accent: '#82B1FF',
     error: '#FF5252',
