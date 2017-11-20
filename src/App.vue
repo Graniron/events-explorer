@@ -2,7 +2,7 @@
   <v-app light>
     <v-navigation-drawer temporary absolute v-model="sideNav">
       <v-list>
-        <v-list-tile v-for="item in menuItems" :key="item.title" router :to="item.link" @click="">
+        <v-list-tile v-for="item in menuItems" :key="item.title" :to="item.link" @click="">
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
@@ -18,7 +18,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
-        <v-btn router :to="item.link" v-for="item in menuItems" :key="item.title" flat>
+        <v-btn :to="item.link" v-for="item in menuItems" :key="item.title" flat>
           <v-icon dark left>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
