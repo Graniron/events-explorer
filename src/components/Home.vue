@@ -12,15 +12,15 @@
     <v-layout row wrap class="mt-2">
       <v-flex xs12>
         <v-carousel style="cursor: pointer">
-          <v-carousel-item 
-            v-for="event in events" 
-            v-bind:src="event.imageUrl" 
+          <v-carousel-item
+            v-for="event in events"
+            :src="event.imageUrl"
             @click="goToEvent(event.id)"
             :key="event.id">
             <div class="title">{{ event.title }}</div>
           </v-carousel-item>
         </v-carousel>
-      </v-flex>  
+      </v-flex>
     </v-layout>
 
     <v-layout row wrap class="mt-2">
@@ -28,19 +28,16 @@
         <p>Join our awesome events</p>
       </v-flex>
     </v-layout>
-  </v-container> 
+  </v-container>
 </template>
 
 
 <script>
   export default {
-    data() {
-      return {
-        events: [
-          { imageUrl: 'https://coworker.imgix.net/pictures/C282/edit/lviv-resize.jpg', id: 'dw3de3ee', title: 'Events in Lviv' },
-          { imageUrl: 'http://www.dniprohotel.ua/assets/photo/dnipro-hotel/dnipro-hotel-kiev-02.jpg', id: 'hsdse3ee', title: 'Events in Dnipro' },
-        ],
-      };
+    computed: {
+      events() {
+        return this.$store.getters.featuredEvents;
+      },
     },
     methods: {
       goToEvent(id) {
@@ -58,5 +55,5 @@
     color: #fff;
     font-size: 2em;
     padding: 20px;
-  }    
+  }
 </style>

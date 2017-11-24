@@ -4,14 +4,14 @@
       <v-flex xs12>
         <v-card>
           <v-card-title>
-            <h4 class="primary--text">Me Event</h4>
+            <h4 class="primary--text">{{ event.title }}</h4>
           </v-card-title>
-          <v-card-media 
-            src="https://coworker.imgix.net/pictures/C282/edit/lviv-resize.jpg" 
+          <v-card-media
+            :src="event.imageUrl"
             height="400px">
           </v-card-media>
           <v-card-text>
-            <div class="info--text">17th July 2017 - Where it taks place</div>
+            <div class="info--text">{{ event.date }} - Where it taks place</div>
             <div>Lorem Ipsum Lorem Ipsum Lorem Ipsum</div>
           </v-card-text>
           <v-card-actions>
@@ -23,3 +23,15 @@
     </v-layout>
   </v-container>
 </template>
+
+
+<script>
+  export default {
+    props: ['id'],
+    computed: {
+      event() {
+        return this.$store.getters.loadedEvent(this.id);
+      },
+    },
+  };
+</script>
