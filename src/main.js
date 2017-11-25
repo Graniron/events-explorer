@@ -12,6 +12,7 @@ import {
   VToolbar,
   VCarousel,
   VCard,
+  VTextField,
   transitions,
 } from 'vuetify';
 import '../node_modules/vuetify/src/stylus/app.styl';
@@ -32,6 +33,7 @@ Vue.use(Vuetify, {
     VToolbar,
     VCarousel,
     VCard,
+    VTextField,
     transitions,
   },
   theme: {

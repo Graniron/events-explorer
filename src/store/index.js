@@ -24,8 +24,17 @@ const store = new Vuex.Store({
       registerEvents: ['dw3de3ee'],
     },
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    createEvent(state, payload) {
+      state.loadedEvents.push(payload);
+    },
+  },
+  actions: {
+    createEvent({ commit }, payload) {
+      // Reach out to firebase and store it
+      commit('createEvent', payload);
+    },
+  },
   getters: {
     loadedEvents(state) {
       return state.loadedEvents.sort((eventA, eventB) => eventA.date > eventB);
