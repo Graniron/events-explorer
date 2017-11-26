@@ -11,8 +11,8 @@
             height="400px">
           </v-card-media>
           <v-card-text>
-            <div class="info--text">{{ event.date }} - Where it taks place</div>
-            <div>Lorem Ipsum Lorem Ipsum Lorem Ipsum</div>
+            <div class="info--text">{{ event.date }} - {{ event.location}}</div>
+            <div>{{ event.description }}</div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>

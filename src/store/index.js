@@ -11,12 +11,16 @@ const store = new Vuex.Store({
         date: '2017-07-17',
         id: 'dw3de3ee',
         title: 'Events in Lviv',
+        location: 'NYC',
+        description: 'Its New York',
       },
       {
         imageUrl: 'http://www.dniprohotel.ua/assets/photo/dnipro-hotel/dnipro-hotel-kiev-02.jpg',
         date: '2017-07-19',
         id: 'hsdse3ee',
         title: 'Events in Dnipro',
+        location: 'Dnipro',
+        description: 'Its Dnipro',
       },
     ],
     user: {

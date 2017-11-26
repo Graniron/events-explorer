@@ -56,7 +56,25 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
+              <h4>Choose Date and Time</h4>
+            </v-flex>
+          </v-layout>
+          <v-layout row class="mb-2">
+            <v-flex xs12 sm6 offset-sm3>
+              <v-date-picker v-model="date"></v-date-picker>
+              <p>{{ date }}</p>
+            </v-flex>
+          </v-layout>
+          <v-layout row >
+            <v-flex xs12 sm6 offset-sm3>
+              <v-time-picker v-model="time"></v-time-picker>
+              {{ time }}
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
               <v-btn type="submit" :disabled="!formIsValid" class="primary">CREATE EVENT</v-btn>
+              {{submitableDateTime}}
             </v-flex>
           </v-layout>
         </form>
@@ -73,11 +91,20 @@
         location: '',
         imageUrl: '',
         description: '',
+        date: null,
+        time: null,
       };
     },
     computed: {
       formIsValid() {
         return this.title !== '' && this.location !== '' && this.imageUrl !== '' && this.description !== '';
+      },
+      submitableDateTime() {
+        if (this.date && this.time) {
+          const date = `${this.date} ${this.time}`;
+          return date;
+        }
+        return null;
       },
     },
     methods: {
@@ -90,8 +117,8 @@
           location: this.location,
           imageUrl: this.imageUrl,
           description: this.description,
-          date: new Date(),
-          id: +new Date(),
+          date: this.submitableDateTime,
+          id: new Date().getTime().toString(),
         };
         // Dispatch action
         this.$store.dispatch('createEvent', eventData);
