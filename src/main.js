@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import * as firebase from 'firebase';
 
 import {
   Vuetify,
@@ -59,4 +60,13 @@ new Vue({
   router,
   store,
   render: h => h(App),
+  created() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyDXe5Ig4qlLxYMjKy6du4QgQMYSoqnJ608',
+      authDomain: 'events-explorer.firebaseapp.com',
+      databaseURL: 'https://events-explorer.firebaseio.com',
+      projectId: 'events-explorer',
+      storageBucket: 'events-explorer.appspot.com',
+    });
+  },
 });

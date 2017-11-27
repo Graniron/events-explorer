@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import * as firebase from 'firebase';
 
 Vue.use(Vuex);
 
@@ -23,20 +24,50 @@ const store = new Vuex.Store({
         description: 'Its Dnipro',
       },
     ],
-    user: {
-      id: 'defwfew',
-      registerEvents: ['dw3de3ee'],
-    },
+    user: null,
   },
   mutations: {
     createEvent(state, payload) {
       state.loadedEvents.push(payload);
+    },
+    setUser(state, payload) {
+      state.user = payload;
     },
   },
   actions: {
     createEvent({ commit }, payload) {
       // Reach out to firebase and store it
       commit('createEvent', payload);
+    },
+    signUserIn({ commit }, payload) {
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        .then(
+          (user) => {
+            const userToSet = {
+              id: user.uid,
+              registeredEvents: [],
+            };
+            commit('setUser', userToSet);
+          },
+        )
+        .catch(
+          error => console.error(error),
+        );
+    },
+    signUserUp({ commit }, payload) {
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+        .then(
+          (user) => {
+            const newUser = {
+              id: user.uid,
+              registeredEvents: [],
+            };
+            commit('setUser', newUser);
+          },
+        )
+        .catch(
+          error => console.error(error),
+        );
     },
   },
   getters: {
@@ -48,6 +79,9 @@ const store = new Vuex.Store({
     },
     loadedEvent(state) {
       return eventId => state.loadedEvents.find(event => event.id === eventId);
+    },
+    user(state) {
+      return state.user;
     },
   },
 });
