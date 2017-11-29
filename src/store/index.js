@@ -25,6 +25,8 @@ const store = new Vuex.Store({
       },
     ],
     user: null,
+    loading: false,
+    error: null,
   },
   mutations: {
     createEvent(state, payload) {
@@ -33,6 +35,15 @@ const store = new Vuex.Store({
     setUser(state, payload) {
       state.user = payload;
     },
+    setLoading(state, payload) {
+      state.loading = payload;
+    },
+    setError(state, payload) {
+      state.error = payload;
+    },
+    clearError(state) {
+      state.error = null;
+    },
   },
   actions: {
     createEvent({ commit }, payload) {
@@ -40,9 +51,12 @@ const store = new Vuex.Store({
       commit('createEvent', payload);
     },
     signUserIn({ commit }, payload) {
+      commit('setLoading', true);
+      commit('clearError');
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(
           (user) => {
+            commit('setLoading', false);
             const userToSet = {
               id: user.uid,
               registeredEvents: [],
@@ -51,13 +65,20 @@ const store = new Vuex.Store({
           },
         )
         .catch(
-          error => console.error(error),
+          (error) => {
+            commit('setLoading', false);
+            commit('setError', error);
+            console.error(error);
+          },
         );
     },
     signUserUp({ commit }, payload) {
+      commit('setLoading', true);
+      commit('clearError');
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then(
           (user) => {
+            commit('setLoading', false);
             const newUser = {
               id: user.uid,
               registeredEvents: [],
@@ -66,9 +87,17 @@ const store = new Vuex.Store({
           },
         )
         .catch(
-          error => console.error(error),
+          (error) => {
+            commit('setLoading', false);
+            commit('setError', error);
+            console.error(error);
+          },
         );
     },
+    clearError({ commit }) {
+      commit('clearError');
+    },
+
   },
   getters: {
     loadedEvents(state) {
@@ -82,6 +111,12 @@ const store = new Vuex.Store({
     },
     user(state) {
       return state.user;
+    },
+    error(state) {
+      return state.error;
+    },
+    loading(state) {
+      return state.loading;
     },
   },
 });

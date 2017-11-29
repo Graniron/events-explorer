@@ -16,6 +16,7 @@ import {
   VTextField,
   VDatePicker,
   VTimePicker,
+  VAlert,
   transitions,
 } from 'vuetify';
 import '../node_modules/vuetify/src/stylus/app.styl';
@@ -23,6 +24,7 @@ import '../node_modules/vuetify/src/stylus/app.styl';
 import App from './App';
 import router from './router';
 import store from './store';
+import AlertCmp from './components/shared/Alert';
 
 Vue.use(Vuetify, {
   components: {
@@ -39,6 +41,7 @@ Vue.use(Vuetify, {
     VTextField,
     VDatePicker,
     VTimePicker,
+    VAlert,
     transitions,
   },
   theme: {
@@ -53,6 +56,7 @@ Vue.use(Vuetify, {
 });
 
 Vue.config.productionTip = false;
+Vue.component('app-alert', AlertCmp);
 
 /* eslint-disable no-new */
 new Vue({
