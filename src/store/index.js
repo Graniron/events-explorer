@@ -29,6 +29,9 @@ const store = new Vuex.Store({
     error: null,
   },
   mutations: {
+    setLoadedEvents(state, payload) {
+      state.loadedEvents = payload;
+    },
     createEvent(state, payload) {
       state.loadedEvents.push(payload);
     },
@@ -46,9 +49,43 @@ const store = new Vuex.Store({
     },
   },
   actions: {
+    loadEvents({ commit }) {
+      console.log('LOAD EVENTS CALLED');
+      commit('setLoading', true);
+      firebase.database().ref('events').once('value')
+        .then((data) => {
+          console.log(data.val());
+          const events = [];
+          const obj = data.val();
+          Object.keys(obj).forEach((key) => {
+            console.log(key);
+            events.push({
+              id: key,
+              title: obj[key].title,
+              description: obj[key].description,
+              date: obj[key].date,
+              location: obj[key].location,
+              imageUrl: obj[key].imageUrl,
+            });
+          });
+          console.log(events);
+          commit('setLoading', false);
+          commit('setLoadedEvents', events);
+        })
+        .catch((error) => {
+          commit('setLoading', false);
+          console.log(error);
+        });
+    },
     createEvent({ commit }, payload) {
       // Reach out to firebase and store it
-      commit('createEvent', payload);
+      firebase.database().ref('events').push(payload)
+        .then((data) => {
+          console.log(data);
+          const key = data.key;
+          commit('createEvent', { ...payload, id: key });
+        })
+        .catch(error => console.error(error));
     },
     signUserIn({ commit }, payload) {
       commit('setLoading', true);

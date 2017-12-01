@@ -17,6 +17,7 @@ import {
   VDatePicker,
   VTimePicker,
   VAlert,
+  VProgressCircular,
   transitions,
 } from 'vuetify';
 import '../node_modules/vuetify/src/stylus/app.styl';
@@ -42,6 +43,7 @@ Vue.use(Vuetify, {
     VDatePicker,
     VTimePicker,
     VAlert,
+    VProgressCircular,
     transitions,
   },
   theme: {
@@ -72,5 +74,7 @@ new Vue({
       projectId: 'events-explorer',
       storageBucket: 'events-explorer.appspot.com',
     });
+
+    this.$store.dispatch('loadEvents');
   },
 });
