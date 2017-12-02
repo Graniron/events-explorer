@@ -74,6 +74,11 @@ new Vue({
       projectId: 'events-explorer',
       storageBucket: 'events-explorer.appspot.com',
     });
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$store.dispatch('autoSignIn', user);
+      }
+    });
 
     this.$store.dispatch('loadEvents');
   },

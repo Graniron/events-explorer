@@ -66,6 +66,7 @@ const store = new Vuex.Store({
               date: obj[key].date,
               location: obj[key].location,
               imageUrl: obj[key].imageUrl,
+              creatorId: obj[key].creatorId,
             });
           });
           console.log(events);
@@ -83,7 +84,7 @@ const store = new Vuex.Store({
         .then((data) => {
           console.log(data);
           const key = data.key;
-          commit('createEvent', { ...payload, id: key });
+          commit('createEvent', { ...payload, id: key, creatorId: this.getters.user.id });
         })
         .catch(error => console.error(error));
     },
@@ -130,6 +131,13 @@ const store = new Vuex.Store({
             console.error(error);
           },
         );
+    },
+    autoSignIn({ commit }, payload) {
+      commit('setUser', { id: payload.uid, registeredEvents: [] });
+    },
+    logout({ commit }) {
+      firebase.auth().signOut();
+      commit('setUser', null);
     },
     clearError({ commit }) {
       commit('clearError');
