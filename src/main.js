@@ -18,6 +18,7 @@ import {
   VTimePicker,
   VAlert,
   VProgressCircular,
+  VDialog,
   transitions,
 } from 'vuetify';
 import '../node_modules/vuetify/src/stylus/app.styl';
@@ -26,6 +27,7 @@ import App from './App';
 import router from './router';
 import store from './store';
 import AlertCmp from './components/shared/Alert';
+import EditEventDialog from './components/event/edit/EditEventDialog';
 
 Vue.use(Vuetify, {
   components: {
@@ -44,6 +46,7 @@ Vue.use(Vuetify, {
     VTimePicker,
     VAlert,
     VProgressCircular,
+    VDialog,
     transitions,
   },
   theme: {
@@ -59,6 +62,7 @@ Vue.use(Vuetify, {
 
 Vue.config.productionTip = false;
 Vue.component('app-alert', AlertCmp);
+Vue.component('app-edit-event-dialog', EditEventDialog);
 
 /* eslint-disable no-new */
 new Vue({

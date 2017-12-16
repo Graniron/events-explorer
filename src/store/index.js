@@ -47,6 +47,15 @@ const store = new Vuex.Store({
     clearError(state) {
       state.error = null;
     },
+    updateEvent(state, payload) {
+      const event = state.loadedEvents.find(ev => ev.id === payload.id);
+      if (payload.title) {
+        event.title = payload.title;
+      }
+      if (payload.description) {
+        event.description = payload.description;
+      }
+    },
   },
   actions: {
     loadEvents({ commit }) {
@@ -161,7 +170,18 @@ const store = new Vuex.Store({
     clearError({ commit }) {
       commit('clearError');
     },
-
+    updateEventData({ commit }, payload) {
+      commit('setLoading', true);
+      firebase.database().ref('events').child(payload.id).update(payload)
+        .then(() => {
+          commit('setLoading', false);
+          commit('updateEvent', payload);
+        })
+        .catch((error) => {
+          commit('setLoading', false);
+          console.log(error);
+        });
+    },
   },
   getters: {
     loadedEvents(state) {
